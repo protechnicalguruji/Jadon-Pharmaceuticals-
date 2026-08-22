@@ -1,0 +1,8 @@
+{
+  "name": "JADON Website ",
+  "description": "A precise replica of the RS PHARMA website, preserving all design and functionality with updated branding and SEO.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
