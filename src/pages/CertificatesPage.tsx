@@ -1,6 +1,7 @@
-import { motion } from 'motion/react';
-import { Award, ShieldCheck, FileCheck, CheckCircle2, FileText, BadgeCheck, Building2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Award, ShieldCheck, FileCheck, CheckCircle2, FileText, BadgeCheck, Building2, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const certificates = [
   {
@@ -11,7 +12,7 @@ const certificates = [
     icon: FileCheck,
     color: 'from-emerald-500 to-teal-500',
     date: 'Active',
-    pdfUrl: '/certificates/dl-20b.pdf'
+    imageUrl: '/certificates/dl-20b.jpg'
   },
   {
     id: 'dl-21b',
@@ -21,7 +22,7 @@ const certificates = [
     icon: ShieldCheck,
     color: 'from-blue-500 to-indigo-500',
     date: 'Active',
-    pdfUrl: '/certificates/dl-21b.pdf'
+    imageUrl: '/certificates/dl-21b.jpg'
   },
   {
     id: 'dl-cover-letter',
@@ -31,7 +32,7 @@ const certificates = [
     icon: FileText,
     color: 'from-harmony-turquoise to-harmony-teal',
     date: 'Active',
-    pdfUrl: '/certificates/dl-cover-letter.pdf'
+    imageUrl: '/certificates/dl-cover-letter.jpg'
   },
   {
     id: 'fssai',
@@ -41,7 +42,7 @@ const certificates = [
     icon: Award,
     color: 'from-orange-500 to-amber-500',
     date: 'Active',
-    pdfUrl: '/certificates/fssai-registration.pdf'
+    imageUrl: '/certificates/fssai-registration.jpg'
   },
   {
     id: 'gst',
@@ -51,7 +52,7 @@ const certificates = [
     icon: Building2,
     color: 'from-purple-500 to-pink-500',
     date: 'Active',
-    pdfUrl: '/certificates/gst-registration.pdf'
+    imageUrl: '/certificates/gst-registration.jpg'
   },
   {
     id: 'tan',
@@ -61,7 +62,7 @@ const certificates = [
     icon: BadgeCheck,
     color: 'from-slate-500 to-slate-700',
     date: 'Active',
-    pdfUrl: '/certificates/tan-no.pdf'
+    imageUrl: '/certificates/tan-no.pdf'
   },
   {
     id: 'udyam',
@@ -71,11 +72,13 @@ const certificates = [
     icon: CheckCircle2,
     color: 'from-sky-500 to-blue-600',
     date: 'Active',
-    pdfUrl: '/certificates/udyam-registration.pdf'
+    imageUrl: '/certificates/udyam-registration.jpg'
   }
 ];
 
 export function CertificatesPage() {
+  const [selectedImage, setSelectedImage] = useState<{ url: string; title: string } | null>(null);
+
   return (
     <motion.div
       id="certificates-page-container"
@@ -164,10 +167,13 @@ export function CertificatesPage() {
                   </div>
                   
                   <div className="pt-6 mt-6 border-t border-harmony-teal/10">
-                    <a href={cert.pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-hover group/link transition-colors">
+                    <button
+                      onClick={() => setSelectedImage({ url: cert.imageUrl, title: cert.title })}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-hover group/link transition-colors cursor-pointer"
+                    >
                       <span>View Certificate</span>
                       <FileText className="w-3.5 h-3.5 transform group-hover/link:translate-x-1 transition-transform" />
-                    </a>
+                    </button>
                   </div>
                 </motion.div>
               );
@@ -195,6 +201,55 @@ export function CertificatesPage() {
           </div>
         </div>
       </section>
+
+      {/* Image Viewer Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.5, bounce: 0 }}
+              className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] shadow-2xl overflow-hidden flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+                <h3 className="text-lg font-bold text-slate-800 font-display">
+                  {selectedImage.title}
+                </h3>
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-200/50 rounded-full transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="flex-grow bg-slate-100/50 p-4 overflow-y-auto flex items-center justify-center">
+                {selectedImage.url.endsWith('.pdf') ? (
+                  <iframe
+                    src={`${selectedImage.url}#view=FitH`}
+                    className="w-full h-[75vh] rounded-xl border border-slate-200 shadow-sm"
+                    title={selectedImage.title}
+                  />
+                ) : (
+                  <img
+                    src={selectedImage.url}
+                    alt={selectedImage.title}
+                    className="max-w-full max-h-[75vh] object-contain rounded-xl border border-slate-200 shadow-sm"
+                  />
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </motion.div>
   );
