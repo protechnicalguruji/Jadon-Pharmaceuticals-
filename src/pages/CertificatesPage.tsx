@@ -1,7 +1,6 @@
-import { motion, AnimatePresence } from 'motion/react';
-import { Award, ShieldCheck, FileCheck, CheckCircle2, FileText, BadgeCheck, Building2, X } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Award, ShieldCheck, FileCheck, CheckCircle2, FileText, BadgeCheck, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 const certificates = [
   {
@@ -12,7 +11,8 @@ const certificates = [
     icon: FileCheck,
     color: 'from-emerald-500 to-teal-500',
     date: 'Active',
-    imageUrl: '/certificates/dl-20b.jpg'
+    imageUrl: '/certificates/dl-20b.jpg',
+    pdfUrl: '/certificates/dl-20b.pdf'
   },
   {
     id: 'dl-21b',
@@ -22,7 +22,8 @@ const certificates = [
     icon: ShieldCheck,
     color: 'from-blue-500 to-indigo-500',
     date: 'Active',
-    imageUrl: '/certificates/dl-21b.jpg'
+    imageUrl: '/certificates/dl-21b.jpg',
+    pdfUrl: '/certificates/dl-21b.pdf'
   },
   {
     id: 'dl-cover-letter',
@@ -32,7 +33,8 @@ const certificates = [
     icon: FileText,
     color: 'from-harmony-turquoise to-harmony-teal',
     date: 'Active',
-    imageUrl: '/certificates/dl-cover-letter.jpg'
+    imageUrl: '/certificates/dl-cover-letter.jpg',
+    pdfUrl: '/certificates/dl-cover-letter.pdf'
   },
   {
     id: 'fssai',
@@ -42,7 +44,8 @@ const certificates = [
     icon: Award,
     color: 'from-orange-500 to-amber-500',
     date: 'Active',
-    imageUrl: '/certificates/fssai-registration.jpg'
+    imageUrl: '/certificates/fssai-registration.jpg',
+    pdfUrl: '/certificates/fssai-registration.pdf'
   },
   {
     id: 'gst',
@@ -52,7 +55,8 @@ const certificates = [
     icon: Building2,
     color: 'from-purple-500 to-pink-500',
     date: 'Active',
-    imageUrl: '/certificates/gst-registration.jpg'
+    imageUrl: '/certificates/gst-registration.jpg',
+    pdfUrl: '/certificates/gst-registration.pdf'
   },
   {
     id: 'tan',
@@ -62,7 +66,8 @@ const certificates = [
     icon: BadgeCheck,
     color: 'from-slate-500 to-slate-700',
     date: 'Active',
-    imageUrl: '/certificates/tan-no.pdf'
+    imageUrl: null,
+    pdfUrl: '/certificates/tan-no.pdf'
   },
   {
     id: 'udyam',
@@ -72,13 +77,12 @@ const certificates = [
     icon: CheckCircle2,
     color: 'from-sky-500 to-blue-600',
     date: 'Active',
-    imageUrl: '/certificates/udyam-registration.jpg'
+    imageUrl: '/certificates/udyam-registration.jpg',
+    pdfUrl: '/certificates/udyam-registration.pdf'
   }
 ];
 
 export function CertificatesPage() {
-  const [selectedImage, setSelectedImage] = useState<{ url: string; title: string } | null>(null);
-
   return (
     <motion.div
       id="certificates-page-container"
@@ -140,40 +144,63 @@ export function CertificatesPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="bg-harmony-card rounded-3xl border border-harmony-teal/20 p-8 shadow-sm hover:shadow-xl hover:border-harmony-teal/40 transition-all duration-300 flex flex-col relative overflow-hidden group"
+                  className="bg-harmony-card rounded-3xl border border-harmony-teal/20 p-6 shadow-sm hover:shadow-xl hover:border-harmony-teal/40 transition-all duration-300 flex flex-col relative overflow-hidden group"
                 >
-                  <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${cert.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+                  <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${cert.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10`} />
                   
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="p-3.5 bg-harmony-bg text-primary rounded-2xl border border-harmony-teal/10 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                      <Icon className="w-6 h-6" />
+                  {/* Thumbnail Image or Icon Fallback */}
+                  <div className="relative h-48 mb-6 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/50 group-hover:border-harmony-teal/30 transition-colors flex items-center justify-center">
+                    {cert.imageUrl ? (
+                      <img 
+                        src={cert.imageUrl} 
+                        alt={cert.title} 
+                        className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" 
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-300 group-hover:text-primary/40 transition-colors">
+                        <Icon className="w-16 h-16 mb-2" />
+                        <span className="text-xs font-semibold uppercase tracking-widest">Protected Document</span>
+                      </div>
+                    )}
+                    
+                    {/* Status Badge */}
+                    <div className="absolute top-3 right-3 z-10">
+                      <span className="px-3 py-1 bg-white/95 backdrop-blur-sm text-emerald-700 border border-emerald-100 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        {cert.date}
+                      </span>
                     </div>
-                    <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                      {cert.date}
-                    </span>
+
+                    {/* Icon Badge */}
+                    <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <div className={`p-2.5 rounded-full bg-gradient-to-br ${cert.color} text-white shadow-inner`}>
+                            <Icon className="w-5 h-5" />
+                        </div>
+                    </div>
                   </div>
 
-                  <div className="space-y-3 flex-grow">
+                  <div className="space-y-3 flex-grow mt-2">
                     <h3 className="text-xl font-extrabold text-harmony-dark font-display leading-snug">
                       {cert.title}
                     </h3>
                     <p className="text-xs font-bold text-harmony-turquoise uppercase tracking-wider">
                       {cert.issuer}
                     </p>
-                    <p className="text-harmony-dark/80 text-sm leading-relaxed font-normal pt-2">
+                    <p className="text-harmony-dark/80 text-sm leading-relaxed font-normal pt-1">
                       {cert.description}
                     </p>
                   </div>
                   
-                  <div className="pt-6 mt-6 border-t border-harmony-teal/10">
-                    <button
-                      onClick={() => setSelectedImage({ url: cert.imageUrl, title: cert.title })}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-hover group/link transition-colors cursor-pointer"
+                  <div className="pt-5 mt-5 border-t border-harmony-teal/10">
+                    <a
+                      href={cert.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-primary/5 hover:bg-primary text-primary hover:text-white rounded-xl text-sm font-bold transition-all duration-300 group/link"
                     >
-                      <span>View Certificate</span>
-                      <FileText className="w-3.5 h-3.5 transform group-hover/link:translate-x-1 transition-transform" />
-                    </button>
+                      <span>Open PDF Document</span>
+                      <FileText className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
+                    </a>
                   </div>
                 </motion.div>
               );
@@ -201,55 +228,6 @@ export function CertificatesPage() {
           </div>
         </div>
       </section>
-
-      {/* Image Viewer Modal */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
-            onClick={() => setSelectedImage(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: "spring", duration: 0.5, bounce: 0 }}
-              className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] shadow-2xl overflow-hidden flex flex-col"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-                <h3 className="text-lg font-bold text-slate-800 font-display">
-                  {selectedImage.title}
-                </h3>
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-200/50 rounded-full transition-colors cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="flex-grow bg-slate-100/50 p-4 overflow-y-auto flex items-center justify-center">
-                {selectedImage.url.endsWith('.pdf') ? (
-                  <iframe
-                    src={`${selectedImage.url}#view=FitH`}
-                    className="w-full h-[75vh] rounded-xl border border-slate-200 shadow-sm"
-                    title={selectedImage.title}
-                  />
-                ) : (
-                  <img
-                    src={selectedImage.url}
-                    alt={selectedImage.title}
-                    className="max-w-full max-h-[75vh] object-contain rounded-xl border border-slate-200 shadow-sm"
-                  />
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
     </motion.div>
   );
