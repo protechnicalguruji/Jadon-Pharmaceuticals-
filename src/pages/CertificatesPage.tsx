@@ -11,8 +11,7 @@ const certificates = [
     icon: FileCheck,
     color: 'from-emerald-500 to-teal-500',
     date: 'Active',
-    imageUrl: '/certificates/dl-20b.jpg',
-    pdfUrl: '/certificates/dl-20b.pdf'
+    imageUrls: ['/certificates/DL%2020B%20(JADON%20PHARMACEUTICALS%20INDIA%20PRIVATE%20LIMITED).jpg']
   },
   {
     id: 'dl-21b',
@@ -22,8 +21,7 @@ const certificates = [
     icon: ShieldCheck,
     color: 'from-blue-500 to-indigo-500',
     date: 'Active',
-    imageUrl: '/certificates/dl-21b.jpg',
-    pdfUrl: '/certificates/dl-21b.pdf'
+    imageUrls: ['/certificates/DL%2021B%20(JADON%20PHARMACEUTICALS%20INDIA%20PRIVATE%20LIMITED).jpg']
   },
   {
     id: 'dl-cover-letter',
@@ -33,8 +31,7 @@ const certificates = [
     icon: FileText,
     color: 'from-harmony-turquoise to-harmony-teal',
     date: 'Active',
-    imageUrl: '/certificates/dl-cover-letter.jpg',
-    pdfUrl: '/certificates/dl-cover-letter.pdf'
+    imageUrls: ['/certificates/DL%20COVER%20LETTER%20(JADON%20PHARMACEUTICALS%20INDIA%20PRIVATE%20LIMITED).jpg']
   },
   {
     id: 'fssai',
@@ -44,8 +41,13 @@ const certificates = [
     icon: Award,
     color: 'from-orange-500 to-amber-500',
     date: 'Active',
-    imageUrl: '/certificates/fssai-registration.jpg',
-    pdfUrl: '/certificates/fssai-registration.pdf'
+    imageUrls: [
+      '/certificates/FSSAI%20(Registration%20Certificate)-images-0.jpg',
+      '/certificates/FSSAI%20(Registration%20Certificate)-images-1.jpg',
+      '/certificates/FSSAI%20(Registration%20Certificate)-images-2.jpg',
+      '/certificates/FSSAI%20(Registration%20Certificate)-images-3.jpg',
+      '/certificates/FSSAI%20(Registration%20Certificate)-images-4.jpg'
+    ]
   },
   {
     id: 'gst',
@@ -55,8 +57,11 @@ const certificates = [
     icon: Building2,
     color: 'from-purple-500 to-pink-500',
     date: 'Active',
-    imageUrl: '/certificates/gst-registration.jpg',
-    pdfUrl: '/certificates/gst-registration.pdf'
+    imageUrls: [
+      '/certificates/GST%20Registration-images-0.jpg',
+      '/certificates/GST%20Registration-images-1.jpg',
+      '/certificates/GST%20Registration-images-2.jpg'
+    ]
   },
   {
     id: 'tan',
@@ -66,8 +71,7 @@ const certificates = [
     icon: BadgeCheck,
     color: 'from-slate-500 to-slate-700',
     date: 'Active',
-    imageUrl: null,
-    pdfUrl: '/certificates/tan-no.pdf'
+    imageUrls: []
   },
   {
     id: 'udyam',
@@ -77,8 +81,11 @@ const certificates = [
     icon: CheckCircle2,
     color: 'from-sky-500 to-blue-600',
     date: 'Active',
-    imageUrl: '/certificates/udyam-registration.jpg',
-    pdfUrl: '/certificates/udyam-registration.pdf'
+    imageUrls: [
+      '/certificates/UDYAM%20REGISTRATION%20CERTIFICATE-images-0.jpg',
+      '/certificates/UDYAM%20REGISTRATION%20CERTIFICATE-images-1.jpg',
+      '/certificates/UDYAM%20REGISTRATION%20CERTIFICATE-images-2.jpg'
+    ]
   }
 ];
 
@@ -134,7 +141,7 @@ export function CertificatesPage() {
       <div className="bg-grid-pattern py-16 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
-            {certificates.filter(cert => cert.imageUrl).map((cert, index) => (
+            {certificates.filter(cert => cert.imageUrls && cert.imageUrls.length > 0).map((cert, index) => (
               <motion.div
                 key={cert.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -143,13 +150,16 @@ export function CertificatesPage() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="flex flex-col space-y-6"
               >
-                <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-200/60 hover:shadow-2xl hover:border-harmony-teal/30 transition-all duration-500">
-                  <img
-                    src={cert.imageUrl!}
-                    alt={cert.title}
-                    className="w-full h-auto rounded-2xl object-contain border border-slate-100"
-                    loading="lazy"
-                  />
+                <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-200/60 hover:shadow-2xl hover:border-harmony-teal/30 transition-all duration-500 flex flex-col gap-4">
+                  {cert.imageUrls.map((url, i) => (
+                    <img
+                      key={i}
+                      src={url}
+                      alt={`${cert.title} Page ${i + 1}`}
+                      className="w-full h-auto rounded-2xl object-contain border border-slate-100"
+                      loading="lazy"
+                    />
+                  ))}
                 </div>
                 
                 <div className="px-2 sm:px-4">
