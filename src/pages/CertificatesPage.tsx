@@ -130,81 +130,47 @@ export function CertificatesPage() {
         </div>
       </section>
 
-      {/* Certificates Grid */}
+      {/* Certificates Gallery */}
       <div className="bg-grid-pattern py-16 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates.map((cert, index) => {
-              const Icon = cert.icon;
-              return (
-                <motion.div
-                  key={cert.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -5 }}
-                  className="bg-harmony-card rounded-3xl border border-harmony-teal/20 p-6 shadow-sm hover:shadow-xl hover:border-harmony-teal/40 transition-all duration-300 flex flex-col relative overflow-hidden group"
-                >
-                  <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${cert.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10`} />
-                  
-                  {/* Thumbnail Image or Icon Fallback */}
-                  <div className="relative h-48 mb-6 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/50 group-hover:border-harmony-teal/30 transition-colors flex items-center justify-center">
-                    {cert.imageUrl ? (
-                      <img 
-                        src={cert.imageUrl} 
-                        alt={cert.title} 
-                        className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" 
-                      />
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-300 group-hover:text-primary/40 transition-colors">
-                        <Icon className="w-16 h-16 mb-2" />
-                        <span className="text-xs font-semibold uppercase tracking-widest">Protected Document</span>
-                      </div>
-                    )}
-                    
-                    {/* Status Badge */}
-                    <div className="absolute top-3 right-3 z-10">
-                      <span className="px-3 py-1 bg-white/95 backdrop-blur-sm text-emerald-700 border border-emerald-100 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        {cert.date}
-                      </span>
-                    </div>
-
-                    {/* Icon Badge */}
-                    <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <div className={`p-2.5 rounded-full bg-gradient-to-br ${cert.color} text-white shadow-inner`}>
-                            <Icon className="w-5 h-5" />
-                        </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 flex-grow mt-2">
-                    <h3 className="text-xl font-extrabold text-harmony-dark font-display leading-snug">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
+            {certificates.filter(cert => cert.imageUrl).map((cert, index) => (
+              <motion.div
+                key={cert.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="flex flex-col space-y-6"
+              >
+                <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-200/60 hover:shadow-2xl hover:border-harmony-teal/30 transition-all duration-500">
+                  <img
+                    src={cert.imageUrl!}
+                    alt={cert.title}
+                    className="w-full h-auto rounded-2xl object-contain border border-slate-100"
+                    loading="lazy"
+                  />
+                </div>
+                
+                <div className="px-2 sm:px-4">
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <h3 className="text-2xl font-extrabold text-harmony-dark font-display leading-tight">
                       {cert.title}
                     </h3>
-                    <p className="text-xs font-bold text-harmony-turquoise uppercase tracking-wider">
-                      {cert.issuer}
-                    </p>
-                    <p className="text-harmony-dark/80 text-sm leading-relaxed font-normal pt-1">
-                      {cert.description}
-                    </p>
+                    <span className="shrink-0 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5 mt-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      {cert.date}
+                    </span>
                   </div>
-                  
-                  <div className="pt-5 mt-5 border-t border-harmony-teal/10">
-                    <a
-                      href={cert.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-primary/5 hover:bg-primary text-primary hover:text-white rounded-xl text-sm font-bold transition-all duration-300 group/link"
-                    >
-                      <span>Open PDF Document</span>
-                      <FileText className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
-                    </a>
-                  </div>
-                </motion.div>
-              );
-            })}
+                  <p className="text-sm font-bold text-harmony-turquoise uppercase tracking-wider mb-2">
+                    {cert.issuer}
+                  </p>
+                  <p className="text-harmony-dark/80 text-base leading-relaxed font-normal">
+                    {cert.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
