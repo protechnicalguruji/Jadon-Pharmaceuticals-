@@ -52,7 +52,7 @@ export function Footer() {
             <Link to="/" className="flex items-center gap-2.5 group cursor-pointer">
               <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-md overflow-hidden border border-harmony-teal/30 shrink-0">
                 <img
-                  src="/logo.jpg"
+                  src="/logo 2.jpg"
                   alt="Jadon Pharmaceuticals Logo"
                   className="w-full h-full object-contain p-0.5"
                 />

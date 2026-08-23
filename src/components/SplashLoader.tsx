@@ -33,7 +33,7 @@ export function SplashLoader({ onComplete }: SplashLoaderProps) {
           >
             <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center shadow-xl border border-harmony-teal/30 p-2">
               <img
-                src="/logo.jpg"
+                src="/logo 2.jpg"
                 alt="Jadon Pharmaceuticals Logo"
                 className="w-full h-full object-contain"
               />
