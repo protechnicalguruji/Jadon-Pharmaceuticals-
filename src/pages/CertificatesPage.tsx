@@ -11,7 +11,7 @@ const certificates = [
     icon: FileCheck,
     color: 'from-emerald-500 to-teal-500',
     date: 'Active',
-    imageUrls: ['/certificates/DL%2020B%20(JADON%20PHARMACEUTICALS%20INDIA%20PRIVATE%20LIMITED).jpg']
+    imageUrls: ['/certificates/dl-20b.jpg']
   },
   {
     id: 'dl-21b',
@@ -21,7 +21,7 @@ const certificates = [
     icon: ShieldCheck,
     color: 'from-blue-500 to-indigo-500',
     date: 'Active',
-    imageUrls: ['/certificates/DL%2021B%20(JADON%20PHARMACEUTICALS%20INDIA%20PRIVATE%20LIMITED).jpg']
+    imageUrls: ['/certificates/dl-21b.jpg']
   },
   {
     id: 'dl-cover-letter',
@@ -31,7 +31,7 @@ const certificates = [
     icon: FileText,
     color: 'from-harmony-turquoise to-harmony-teal',
     date: 'Active',
-    imageUrls: ['/certificates/DL%20COVER%20LETTER%20(JADON%20PHARMACEUTICALS%20INDIA%20PRIVATE%20LIMITED).jpg']
+    imageUrls: ['/certificates/dl-cover-letter.jpg']
   },
   {
     id: 'fssai',
@@ -42,11 +42,11 @@ const certificates = [
     color: 'from-orange-500 to-amber-500',
     date: 'Active',
     imageUrls: [
-      '/certificates/FSSAI%20(Registration%20Certificate)-images-0.jpg',
-      '/certificates/FSSAI%20(Registration%20Certificate)-images-1.jpg',
-      '/certificates/FSSAI%20(Registration%20Certificate)-images-2.jpg',
-      '/certificates/FSSAI%20(Registration%20Certificate)-images-3.jpg',
-      '/certificates/FSSAI%20(Registration%20Certificate)-images-4.jpg'
+      '/certificates/fssai-0.jpg',
+      '/certificates/fssai-1.jpg',
+      '/certificates/fssai-2.jpg',
+      '/certificates/fssai-3.jpg',
+      '/certificates/fssai-4.jpg'
     ]
   },
   {
@@ -58,9 +58,9 @@ const certificates = [
     color: 'from-purple-500 to-pink-500',
     date: 'Active',
     imageUrls: [
-      '/certificates/GST%20Registration-images-0.jpg',
-      '/certificates/GST%20Registration-images-1.jpg',
-      '/certificates/GST%20Registration-images-2.jpg'
+      '/certificates/gst-0.jpg',
+      '/certificates/gst-1.jpg',
+      '/certificates/gst-2.jpg'
     ]
   },
   {
@@ -82,9 +82,9 @@ const certificates = [
     color: 'from-sky-500 to-blue-600',
     date: 'Active',
     imageUrls: [
-      '/certificates/UDYAM%20REGISTRATION%20CERTIFICATE-images-0.jpg',
-      '/certificates/UDYAM%20REGISTRATION%20CERTIFICATE-images-1.jpg',
-      '/certificates/UDYAM%20REGISTRATION%20CERTIFICATE-images-2.jpg'
+      '/certificates/udyam-0.jpg',
+      '/certificates/udyam-1.jpg',
+      '/certificates/udyam-2.jpg'
     ]
   }
 ];
